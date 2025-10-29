@@ -36,6 +36,7 @@ pipeline {
             }
         }
 
+        
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv(credentialsId: 'nav-sonarcloud-token', installationName: 'nav-sq') {
