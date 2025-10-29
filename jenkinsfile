@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'vish-security-agent'
+        label 'nav-ubuntu-a'
     }
     triggers {
         pollSCM('H/3 * * * *') // checks every 3 mins, or
@@ -8,10 +8,10 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_USER = 'vishwacloudlab'
+        DOCKERHUB_USER = 'navcloudlab'
         IMAGE_NAME = 'jenkins-docker-lab'
         SONARQUBE = 'SonarCloud'
-        SONAR_TOKEN = credentials('vish-sonarcloud-token')
+        SONAR_TOKEN = credentials('nav-sonarcloud-token')
 
     }
     stages {
@@ -38,7 +38,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv(credentialsId: 'vish-sonarcloud-token', installationName: 'vish-sonarqube') {
+                withSonarQubeEnv(credentialsId: 'nav-sonarcloud-token', installationName: 'nav-sq') {
                     sh '''#!/bin/bash
                         set -eux
                         echo "=== SonarQube installation ==="
@@ -50,8 +50,8 @@ pipeline {
 
                         echo "=== Running SonarQube Scanner ==="
                         sonar-scanner \
-                        -Dsonar.organization="vcltestorg01" \
-                        -Dsonar.projectKey="vcltestorg01_vcltestorg01" \
+                        -Dsonar.organization="navg463-netizen" \
+                        -Dsonar.projectKey="navg463-netizen_repo1" \
                         -Dsonar.host.url=https://sonarcloud.io \
                         -Dsonar.sources=. \
                         -Dsonar.python.coverage.reportPaths=coverage.xml \
